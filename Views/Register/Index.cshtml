@@ -3,7 +3,7 @@
 }
 
 <h4>Registreer</h4>
-<form>
+<form method="post" asp-area="" asp-controller="Register" asp-action="Create">
     <div class="mb-3">
         <label for="address">Naam</label>
         <input type="text" class="form-control" name="name" placeholder="Henk de Vries" required="">
@@ -21,7 +21,7 @@
 
     <div class="mb-3">
         <label for="email">Wachtwoordvalidatie</label>
-        <input type="email" class="form-control" name="password-validation">
+        <input type="password" class="form-control" name="password-validation">
     </div>
 
     <hr class="mb-4" />

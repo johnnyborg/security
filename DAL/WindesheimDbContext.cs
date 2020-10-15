@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Microsoft.EntityFrameworkCore;
-using Security.Models;
+using Security.DAL.Entities;
 
 namespace Security.DAL
 {
-    public class MyDbContext : DbContext
+    public class WindesheimDbContext : DbContext
     {
-        public MyDbContext(DbContextOptions<MyDbContext> options): base(options)
+        public WindesheimDbContext(DbContextOptions<WindesheimDbContext> options): base(options)
         {
         }
 

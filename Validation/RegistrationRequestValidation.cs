@@ -3,6 +3,7 @@ using Security.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Security.Validation
@@ -30,10 +31,9 @@ namespace Security.Validation
             if (this.registrationRequest.Password != this.registrationRequest.PasswordValidation)
                 messages.Add("De wachtwoorden moeten overeen komen");
 
-
-
-
-
+            var match = Regex.Match(registrationRequest.Email, @"^[^@\s]+@[^@\s\.]+\.[^@\.\s]+$", RegexOptions.IgnoreCase);
+            if (!match.Success)
+                messages.Add("Uw emailadres lijkt niet op een emailadres");
         }
     }
 }

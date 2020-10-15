@@ -19,7 +19,7 @@ namespace Security.DAL.Entities
 
         public DateTime Created { get; set; }
 
-        public static string hash(string input)
+        public static string Hash(string input)
         {
             // Delibertly taking MD5
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())

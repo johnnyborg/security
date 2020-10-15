@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Security.ViewModels
 {
-    public class RegisterCreateViewModel
+    public class LoginLoginViewModel
     {
         public IList<string> Messages { get; set; }
 
-        public RegisterCreateRequest RegisterCreateRequest { get; set; }
+        public LoginLoginRequest Request { get; set; }
     }
 }

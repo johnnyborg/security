@@ -10,9 +10,9 @@ namespace Security.Validation
 {
     public class RegistrationRequestValidation : AbstractValidation
     {
-        private RegistrationRequest registrationRequest;
+        private RegisterCreateRequest registrationRequest;
 
-        public RegistrationRequestValidation(RegistrationRequest registrationRequest)
+        public RegistrationRequestValidation(RegisterCreateRequest registrationRequest)
         {
             this.registrationRequest = registrationRequest;
         }

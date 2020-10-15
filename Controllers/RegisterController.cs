@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Connections.Features;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Security.DAL;
 using Security.Requests;
 using Security.Validation;
@@ -13,11 +12,11 @@ namespace Security.Controllers
 {
     public class RegisterController : Controller
     {
-        public readonly WindesheimDbContext myDbContext;
+        public readonly WindesheimDbContext dbContext;
 
-        public RegisterController(WindesheimDbContext myDbContext)
+        public RegisterController(WindesheimDbContext dbContext)
         {
-            this.myDbContext = myDbContext;
+            this.dbContext = dbContext;
         }
 
         public IActionResult Index()
@@ -26,29 +25,29 @@ namespace Security.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] RegistrationRequest registrationRequest)
+        public IActionResult Create([FromForm] RegisterCreateRequest registerCreateRequest)
         {
-            var validator = new RegistrationRequestValidation(registrationRequest);
+            var validator = new RegistrationRequestValidation(registerCreateRequest);
 
             if (validator.IsValid())
             {
-                var user = new Security.DAL.Entities.User()
+                var user = new DAL.Entities.User()
                 {
-                    Name = registrationRequest.Name,
-                    Email = registrationRequest.Email,
-                    Password = Security.DAL.Entities.User.hash(registrationRequest.Password),
+                    Name = registerCreateRequest.Name,
+                    Email = registerCreateRequest.Email,
+                    Password = DAL.Entities.User.Hash(registerCreateRequest.Password),
                     Created = DateTime.Now
                 };
 
-                myDbContext.Users.Add(user);
-                myDbContext.SaveChanges();
+                dbContext.Users.Add(user);
+                dbContext.SaveChanges();
 
                 return Redirect("/");
             }
 
             return View(new RegisterCreateViewModel
             {
-                RegistrationRequest = registrationRequest,
+                RegisterCreateRequest = registerCreateRequest,
                 Messages = validator.GetMessages()
             });
         }

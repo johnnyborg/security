@@ -18,7 +18,7 @@ namespace Security.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasData(
-                new User() { Id = 1, Email = "student@windesheim.nl", Password = User.hash("password"), Name = "Student", Created = DateTime.Now });
+                new User() { Id = 1, Email = "student@windesheim.nl", Password = User.Hash("password"), Name = "Student", Created = DateTime.Now });
         }
     }
 }

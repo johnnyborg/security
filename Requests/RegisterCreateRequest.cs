@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Security.Requests
 {
-    public class RegistrationRequest
+    public class RegisterCreateRequest
     {
         public string Name { get; set; }
 

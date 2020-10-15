@@ -20,12 +20,12 @@
 <form method="post" asp-area="" asp-controller="Register" asp-action="Create">
     <div class="mb-3">
         <label for="address">Naam</label>
-        <input type="text" class="form-control" name="name" placeholder="Henk de Vries" required="">
+        <input type="text" class="form-control" name="name" placeholder="Henk de Vries" value="@Model.RegisterCreateRequest.Name" required="">
     </div>
 
     <div class="mb-3">
         <label for="email">Email</label>
-        <input type="email" class="form-control" name="email" placeholder="Email" required="">
+        <input type="email" class="form-control" name="email" placeholder="Email" value="@Model.RegisterCreateRequest.Email" required="">
     </div>
 
     <div class="mb-3">

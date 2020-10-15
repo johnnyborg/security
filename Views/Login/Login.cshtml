@@ -7,7 +7,7 @@
 <form method="post" asp-area="" asp-controller="Login" asp-action="login">
     <div class="mb-3">
         <label for="username">Email</label>
-        <input type="text" class="form-control" name="email" placeholder="Email" required="">
+        <input type="text" class="form-control" name="email" placeholder="Email" value="@Model.Request.Email" required="">
     </div>
 
     <div class="mb-3">

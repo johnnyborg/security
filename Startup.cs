@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Security.DAL;
+using Security.Security;
 
 namespace Security
 {
@@ -39,6 +40,8 @@ namespace Security
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            services.AddTransient(typeof(UserLogin), typeof(UserLogin));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

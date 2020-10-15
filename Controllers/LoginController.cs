@@ -29,14 +29,14 @@ namespace Security.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([FromForm] LoginLoginRequest loginRequest, HttpContext httpContext)
+        public IActionResult Login([FromForm] LoginLoginRequest loginRequest)
         {
             var validator = new LoginLoginRequestValidation(loginRequest);
             var result = userLogin.ValidateLoginRequest(loginRequest);
 
             if (validator.IsValid() && result.Valid)
             {
-                userLogin.Login(httpContext, result);
+                userLogin.Login(HttpContext, result);
                 return Redirect("/");
             }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json;
 using Security.DAL;
 using Security.DAL.Entities;
@@ -15,11 +16,13 @@ namespace Security.Security
     {
         const string SESSION_KEY = "user_key";
 
-        private WindesheimDbContext dbContext;
+        private readonly WindesheimDbContext dbContext;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UserLogin(WindesheimDbContext dbContext)
+        public UserLogin(WindesheimDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             this.dbContext = dbContext;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public LoginValidationResult ValidateLoginRequest(LoginLoginRequest loginLoginRequest)
@@ -35,9 +38,14 @@ namespace Security.Security
             return new LoginValidationResult(valid, entity);
         }
 
-        public void Login(HttpContext httpContext, LoginValidationResult validationResult)
+        public void Login(LoginValidationResult validationResult)
         {
-            httpContext.Session.SetString(SESSION_KEY, JsonConvert.SerializeObject(new UserStorage(validationResult.User)));
+            httpContextAccessor.HttpContext.Session.SetString(SESSION_KEY, JsonConvert.SerializeObject(new UserStorage(validationResult.User)));
+        }
+
+        public bool HasLogin()
+        {
+            return httpContextAccessor.HttpContext.Session.GetString(SESSION_KEY) != null;
         }
 
         public UserStorage GetUser(HttpContext httpContext)

@@ -41,6 +41,8 @@ namespace Security
                 options.Cookie.IsEssential = true;
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddTransient(typeof(UserLogin), typeof(UserLogin));
         }
 

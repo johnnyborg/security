@@ -36,7 +36,7 @@ namespace Security.Controllers
 
             if (validator.IsValid() && result.Valid)
             {
-                userLogin.Login(HttpContext, result);
+                userLogin.Login(result);
                 return Redirect("/");
             }
 

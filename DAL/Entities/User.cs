@@ -17,7 +17,7 @@ namespace Security.DAL.Entities
 
         public string Name { get; set; }
 
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
 
         public static string Hash(string input)
         {

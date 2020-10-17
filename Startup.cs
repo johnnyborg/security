@@ -44,6 +44,7 @@ namespace Security
             services.AddHttpContextAccessor();
 
             services.AddTransient(typeof(UserLogin), typeof(UserLogin));
+            services.AddTransient(typeof(UserRegistration), typeof(UserRegistration));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

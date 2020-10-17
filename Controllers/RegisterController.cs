@@ -1,22 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Security.DAL;
 using Security.Requests;
+using Security.Security;
 using Security.Validation;
 using Security.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Security.Controllers
 {
     public class RegisterController : Controller
     {
-        public readonly WindesheimDbContext dbContext;
+        private readonly UserRegistration userRegistration;
 
-        public RegisterController(WindesheimDbContext dbContext)
+        public RegisterController(UserRegistration userRegistration)
         {
-            this.dbContext = dbContext;
+            this.userRegistration = userRegistration;
         }
 
         public IActionResult Index()
@@ -31,17 +27,7 @@ namespace Security.Controllers
 
             if (validator.IsValid())
             {
-                var user = new DAL.Entities.User()
-                {
-                    Name = registerCreateRequest.Name,
-                    Email = registerCreateRequest.Email,
-                    Password = DAL.Entities.User.Hash(registerCreateRequest.Password),
-                    Created = DateTime.Now
-                };
-
-                dbContext.Users.Add(user);
-                dbContext.SaveChanges();
-
+                userRegistration.Register(registerCreateRequest);
                 return Redirect("/");
             }
 

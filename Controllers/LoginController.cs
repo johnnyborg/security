@@ -64,6 +64,9 @@ namespace Security.Controllers
 
         public IActionResult Logout()
         {
+            if (!userLogin.HasLogin())
+                throw new Exception("access prohibited");
+
             userLogin.Clear();
             return Redirect("/");
         }

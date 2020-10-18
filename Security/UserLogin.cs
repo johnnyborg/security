@@ -17,7 +17,7 @@ namespace Security.Security
 {
     public class UserLogin
     {
-        const string SESSION_KEY = "user_key";
+        public const string SESSION_KEY = "user_key";
 
         private readonly WindesheimDbContext dbContext;
         private readonly IHttpContextAccessor httpContextAccessor;
@@ -28,6 +28,11 @@ namespace Security.Security
             this.dbContext = dbContext;
             this.httpContextAccessor = httpContextAccessor;
             this.logger = logger;
+        }
+
+        public void Clear()
+        {
+            httpContextAccessor.HttpContext.Session.Remove(SESSION_KEY);
         }
 
         public LoginValidationResult ValidateLoginRequest(LoginLoginRequest loginLoginRequest)
@@ -65,27 +70,20 @@ namespace Security.Security
 
         public bool HasLogin()
         {
-            var session = httpContextAccessor.HttpContext.Session.GetString(SESSION_KEY);
-
-            if (session == null)
-                return false;
-
-            var storage = JsonConvert.DeserializeObject<UserStorage>(session);
+            var storage = GetUser();
 
             if (storage == null)
                 return false;
 
-            return storage.Entity != null;
+            if (storage.Entity == null)
+                return false;
+
+            return storage.FullyAuthenticated;
         }
 
         public UserStorage GetUser()
         {
-            var result = httpContextAccessor.HttpContext.Session.GetString(SESSION_KEY);
-
-            if (result == null)
-                return null;
-
-            return JsonConvert.DeserializeObject<UserStorage>(result);
+            return UserReader.GetUser(httpContextAccessor.HttpContext);
         }
     }
 }

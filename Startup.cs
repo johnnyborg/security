@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Security.DAL;
+using Security.Middleware;
 using Security.Security;
 
 namespace Security
@@ -36,16 +37,19 @@ namespace Security
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.IdleTimeout = TimeSpan.FromHours(8);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            services.Configure<Settings>(Configuration.GetSection("Settings"));
 
             services.AddHttpContextAccessor();
 
             services.AddTransient(typeof(UserLogin), typeof(UserLogin));
             services.AddTransient(typeof(UserRegistration), typeof(UserRegistration));
             services.AddTransient(typeof(LoginHelper), typeof(LoginHelper));
+            services.AddTransient(typeof(UserAuthenticator), typeof(UserAuthenticator));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +63,8 @@ namespace Security
             app.UseStaticFiles();
             app.UseRouting();
             app.UseSession();
+
+            app.UseMiddleware<NotFullyAuthenticatedMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

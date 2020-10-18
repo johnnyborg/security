@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Google.Authenticator;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Security.DAL;
 using Security.Requests;
 using Security.Security;
@@ -8,18 +10,17 @@ using Security.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Security.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly WindesheimDbContext dbContext;
         private readonly UserLogin userLogin;
 
-        public LoginController(WindesheimDbContext dbContext, UserLogin userLogin)
+        public LoginController(UserLogin userLogin)
         {
-            this.dbContext = dbContext;
             this.userLogin = userLogin;
         }
 
@@ -37,6 +38,10 @@ namespace Security.Controllers
             if (validator.IsValid() && result.Valid)
             {
                 userLogin.Login(result);
+
+                if (result.RequiresAuthenticator)
+                    return Redirect("/Authenticator/Validate");
+
                 return Redirect("/");
             }
 
@@ -55,6 +60,12 @@ namespace Security.Controllers
             }
 
             return View(viewModel);
+        }
+
+        public IActionResult Logout()
+        {
+            userLogin.Clear();
+            return Redirect("/");
         }
     }
 }

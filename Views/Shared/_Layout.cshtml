@@ -31,6 +31,19 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                             </li>
                         }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Uitloggen</a>
+                            </li>
+                        }
+
+                        @if (loginHelper.CanRegisterAuthenticator())
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authenticator" asp-action="Index">Authenticator</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

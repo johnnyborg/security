@@ -1,0 +1,15 @@
+﻿@model Security.ViewModels.LoginLoginViewModel
+@{
+    ViewData["Title"] = "Authenticator code";
+}
+
+<h4>Authenticator code</h4>
+<form method="post" asp-area="" asp-controller="authenticator" asp-action="validatecode">
+    <div class="mb-3">
+        <label for="email">Authenticator code</label>
+        <input type="text" class="form-control" name="authenticatorCode">
+    </div>
+
+    <hr class="mb-4" />
+    <button class="btn btn-primary btn-lg btn-block" type="submit">Inloggen</button>
+</form>

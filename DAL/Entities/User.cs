@@ -19,6 +19,8 @@ namespace Security.DAL.Entities
 
         public DateTime Created { get; set; } = DateTime.Now;
 
+        public string AuthenticatorSecret { get; set; }
+
         public static string Hash(string input)
         {
             // Delibertly taking MD5

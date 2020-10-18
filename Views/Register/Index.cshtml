@@ -5,23 +5,23 @@
 <h4>Registreer</h4>
 <form method="post" asp-area="" asp-controller="Register" asp-action="Create">
     <div class="mb-3">
-        <label for="address">Naam</label>
-        <input type="text" class="form-control" name="name" placeholder="Henk de Vries" required="">
+        <label for="name">Naam</label>
+        <input type="text" id="name" class="form-control" name="name" placeholder="Henk de Vries" required="">
     </div>
 
     <div class="mb-3">
-        <label for="username">Email</label>
-        <input type="email" class="form-control" name="email" placeholder="Email" required="">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" name="email" placeholder="Email" required="">
     </div>
 
     <div class="mb-3">
-        <label for="email">Wachtwoord</label>
-        <input type="password" class="form-control" name="password">
+        <label for="password">Wachtwoord</label>
+        <input type="password" id="password" class="form-control" name="password">
     </div>
 
     <div class="mb-3">
-        <label for="email">Wachtwoordvalidatie</label>
-        <input type="password" class="form-control" name="password-validation">
+        <label for="passwordValidation">Wachtwoordvalidatie</label>
+        <input type="password" id="passwordValidation" class="form-control" name="password-validation">
     </div>
 
     <hr class="mb-4" />

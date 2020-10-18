@@ -58,22 +58,29 @@ namespace Security.Security
 
         public void Login(LoginValidationResult validationResult)
         {
-            httpContextAccessor.HttpContext.Session.SetString(SESSION_KEY, JsonConvert.SerializeObject(new UserStorage(validationResult.User)));
+            var session = JsonConvert.SerializeObject(new UserStorage(validationResult.User));
+
+            httpContextAccessor.HttpContext.Session.SetString(SESSION_KEY, session);
         }
 
         public bool HasLogin()
         {
-            var session = JsonConvert.DeserializeObject<UserStorage>(httpContextAccessor.HttpContext.Session.GetString(SESSION_KEY));
+            var session = httpContextAccessor.HttpContext.Session.GetString(SESSION_KEY);
 
             if (session == null)
                 return false;
 
-            return session.Entity != null;
+            var storage = JsonConvert.DeserializeObject<UserStorage>(session);
+
+            if (storage == null)
+                return false;
+
+            return storage.Entity != null;
         }
 
-        public UserStorage GetUser(HttpContext httpContext)
+        public UserStorage GetUser()
         {
-            var result = httpContext.Session.GetString(SESSION_KEY);
+            var result = httpContextAccessor.HttpContext.Session.GetString(SESSION_KEY);
 
             if (result == null)
                 return null;

@@ -8,7 +8,7 @@ namespace Security.Security.Models
 {
     public class UserStorage
     {
-        public User Entity { get; private set; }
+        public User Entity { get; set; }
 
         public UserStorage(User user)
         {
